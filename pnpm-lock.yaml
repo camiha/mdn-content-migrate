@@ -16,6 +16,7 @@ specifiers:
   jest: ^28.1.2
   jsdom: ^20.0.0
   prettier: ^2.7.1
+  prettier-plugin-md-nocjsp: ^1.2.0
   ts-jest: ^28.0.5
   ts-node: ^10.8.2
   typescript: ^4.7.4
@@ -36,6 +37,7 @@ devDependencies:
   jest: 28.1.2_hxaxlvfys2pc3hefxwkmyo5cpq
   jsdom: 20.0.0
   prettier: 2.7.1
+  prettier-plugin-md-nocjsp: 1.2.0
   ts-jest: 28.0.5_lt5llx2ti6zt4eclhanfli5ynu
   ts-node: 10.8.2_qqrtuuv3y2pz7xoxv47yka6pmi
   typescript: 4.7.4
@@ -3278,6 +3280,10 @@ packages:
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+    dev: true
+
+  /prettier-plugin-md-nocjsp/1.2.0:
+    resolution: {integrity: sha512-ShX2dd8XoE6bi1zlY3U4yKJl/MN5LIdMDjVr//n/Dy6vWOWZdMqSFYeA7qcETTfUj6bTP4VfULDcQbgaJcgJKg==}
     dev: true
 
   /prettier/2.7.1:

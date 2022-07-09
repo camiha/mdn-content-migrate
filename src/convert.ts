@@ -7,7 +7,7 @@ export const removePElement = (input: string): string => {
   const targets = Array.from(dom.window.document.getElementsByTagName('p'));
 
   targets.forEach((current) => {
-    current.outerHTML = current.innerHTML;
+    current.outerHTML = current.innerHTML.trim();
   });
 
   const result = dom.window.document.body.innerHTML;
@@ -21,8 +21,8 @@ export const replaceStrongElement = (input: string): string => {
   );
 
   targets.forEach((current) => {
-    const text = current.innerHTML;
-    current.outerHTML = `\*\*${text}\*\*`;
+    const innerHTML = current.innerHTML;
+    current.outerHTML = `\*\*${innerHTML}\*\*`.trim();
   });
 
   const result = dom.window.document.body.innerHTML;
@@ -34,8 +34,8 @@ export const replaceCodeElement = (input: string): string => {
   const targets = Array.from(dom.window.document.getElementsByTagName('code'));
 
   targets.forEach((current) => {
-    const text = current.innerHTML;
-    current.outerHTML = `\`${text}\``;
+    const innerHTML = current.innerHTML;
+    current.outerHTML = `\`${innerHTML}\``.trim();
   });
 
   const result = dom.window.document.body.innerHTML;
@@ -49,7 +49,7 @@ export const convertLinkElement = (input: string): string => {
   targets.forEach((current) => {
     const href = current.getAttribute('href');
     const innerHTML = current.innerHTML;
-    current.outerHTML = `[${innerHTML}](${href})`;
+    current.outerHTML = `[${innerHTML}](${href})`.trim();
   });
 
   const result = dom.window.document.body.innerHTML;
@@ -61,8 +61,21 @@ export const convertH2Element = (input: string): string => {
   const targets = Array.from(dom.window.document.getElementsByTagName('h2'));
 
   targets.forEach((current) => {
-    const headingText = current.innerHTML;
-    current.outerHTML = `\#\# ${headingText}`;
+    const headingText = current.innerHTML.replace(/\r?\n/g, '').trim();
+    current.outerHTML = `\#\# ${headingText}`.trim();
+  });
+
+  const result = dom.window.document.body.innerHTML;
+  return result;
+};
+
+export const convertH3Element = (input: string): string => {
+  const dom = new JSDOM(input);
+  const targets = Array.from(dom.window.document.getElementsByTagName('h3'));
+
+  targets.forEach((current) => {
+    const headingText = current.innerHTML.replace(/\r?\n/g, '').trim();
+    current.outerHTML = `\#\#\# ${headingText}`.trim();
   });
 
   const result = dom.window.document.body.innerHTML;
@@ -81,7 +94,7 @@ export const convertCodeExample = (input: string): string => {
     current.outerHTML = `
     \`\`\`js
       ${code}
-    \`\`\``;
+    \`\`\``.trim();
   });
 
   const result = dom.window.document.body.innerHTML;
@@ -94,22 +107,93 @@ export const convertListElement = (input: string): string => {
 
   targets.forEach((currentList) => {
     const currentItems = Array.from(currentList.getElementsByTagName('li'));
-    const currentAnchors = Array.from(currentList.getElementsByTagName('a'));
 
-    const ItemAnchorPairs: [HTMLLIElement, HTMLAnchorElement][] =
-      currentAnchors.map((_, index) => [
-        currentItems[index],
-        currentAnchors[index],
-      ]);
-
-    ItemAnchorPairs.forEach((current) => {
-      const [item, anchor] = [...current];
-      const href = anchor.getAttribute('href');
-      const innerHTML = anchor.innerHTML;
-      item.outerHTML = `- [${innerHTML}](${href})`;
+    currentItems.forEach((current) => {
+      const innerHTML = current.innerHTML.trim();
+      current.outerHTML = `- ${innerHTML}`;
     });
 
     currentList.outerHTML = currentList.innerHTML;
+  });
+
+  const result = dom.window.document.body.innerHTML;
+  return result;
+};
+
+export const convertVarElement = (input: string): string => {
+  const dom = new JSDOM(input);
+  const targets = Array.from(dom.window.document.getElementsByTagName('var'));
+
+  targets.forEach((current) => {
+    const innerHTML = current.innerHTML.trim();
+    current.outerHTML = `_${innerHTML}_`;
+  });
+
+  const result = dom.window.document.body.innerHTML;
+  return result;
+};
+
+export const convertEmElement = (input: string): string => {
+  const dom = new JSDOM(input);
+  const targets = Array.from(dom.window.document.getElementsByTagName('em'));
+
+  targets.forEach((current) => {
+    const innerHTML = current.innerHTML.trim();
+    current.outerHTML = `*${innerHTML}*`;
+  });
+
+  const result = dom.window.document.body.innerHTML;
+  return result;
+};
+
+export const convertNoteClass = (input: string): string => {
+  const dom = new JSDOM(input);
+  const targets = Array.from(
+    dom.window.document.getElementsByClassName('note'),
+  );
+
+  targets.forEach((current) => {
+    const innerHTML = current.innerHTML;
+    current.outerHTML = `**Note:** ${innerHTML}`.trim();
+  });
+
+  const result = dom.window.document.body.innerHTML;
+  return result;
+};
+
+export const convertDLElement = (input: string): string => {
+  const dom = new JSDOM(input);
+  const targets = Array.from(dom.window.document.getElementsByTagName('dl'));
+
+  targets.forEach((current) => {
+    const innerHTML = current.innerHTML.trim();
+    current.outerHTML = innerHTML;
+  });
+
+  const result = dom.window.document.body.innerHTML;
+  return result;
+};
+
+export const convertDTElement = (input: string): string => {
+  const dom = new JSDOM(input);
+  const targets = Array.from(dom.window.document.getElementsByTagName('dt'));
+
+  targets.forEach((current) => {
+    const innerHTML = current.innerHTML.trim();
+    current.outerHTML = `* ${innerHTML}`;
+  });
+
+  const result = dom.window.document.body.innerHTML;
+  return result;
+};
+
+export const convertDDElement = (input: string): string => {
+  const dom = new JSDOM(input);
+  const targets = Array.from(dom.window.document.getElementsByTagName('dd'));
+
+  targets.forEach((current) => {
+    const innerHTML = current.innerHTML.trim();
+    current.outerHTML = `  * : ${innerHTML}`;
   });
 
   const result = dom.window.document.body.innerHTML;
