@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "migrate": "ts-node src/index.ts",
     "test": "jest src/index.test.ts"
   },
   "keywords": [],
