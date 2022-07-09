@@ -68,8 +68,6 @@ describe('sample test describe', () => {
     \`\`\``;
 
     const result = convertCodeExample(input);
-    console.log(result);
-    console.log(expectResult);
 
     expect(result).toBe(expectResult);
   });
