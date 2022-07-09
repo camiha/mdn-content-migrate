@@ -15,33 +15,29 @@ import {
   convertDDElement,
 } from './convert';
 
+const createPipeline =
+  (...fns: Array<(n: string) => string>) =>
+  (n: string) =>
+    fns.reduce((v, f) => f(v), n);
+
 export const migrate = (target: string): string => {
-  // もっと良い書き方を見つけたいね
-  const result = convertDTElement(
-    convertDDElement(
-      convertDLElement(
-        convertNoteClass(
-          convertEmElement(
-            convertVarElement(
-              convertListElement(
-                convertCodeExample(
-                  convertH2Element(
-                    convertH3Element(
-                      convertLinkElement(
-                        replaceCodeElement(
-                          replaceStrongElement(removePElement(target)),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
+  const task = createPipeline(
+    convertDTElement,
+    convertDDElement,
+    convertDLElement,
+    convertNoteClass,
+    convertEmElement,
+    convertVarElement,
+    convertListElement,
+    convertCodeExample,
+    convertH2Element,
+    convertH3Element,
+    convertLinkElement,
+    replaceCodeElement,
+    replaceStrongElement,
+    removePElement,
   );
 
+  const result = task(target);
   return result;
 };
