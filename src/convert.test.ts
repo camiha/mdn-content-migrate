@@ -1,7 +1,6 @@
-import { text } from 'stream/consumers';
-import { resourceLimits } from 'worker_threads';
 import {
   convertCodeExample,
+  convertCodeExample2,
   convertDDElement,
   convertDLElement,
   convertDTElement,
@@ -95,6 +94,20 @@ describe('sample test describe', () => {
     \`\`\``;
 
     const result = convertCodeExample(input);
+
+    expect(result).toBe(expectResult);
+  });
+
+  test('convert code example 2', () => {
+    const input = `
+    <pre class="syntaxbox notranslate">
+      console.log('hello world!');</pre>`;
+
+    const expectResult = `\`\`\`js
+            console.log('hello world!');
+    \`\`\``;
+
+    const result = convertCodeExample2(input);
 
     expect(result).toBe(expectResult);
   });

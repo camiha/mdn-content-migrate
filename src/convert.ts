@@ -101,6 +101,25 @@ export const convertCodeExample = (input: string): string => {
   return result;
 };
 
+export const convertCodeExample2 = (input: string): string => {
+  const dom = new JSDOM(input);
+  const targets = Array.from(
+    dom.window.document.getElementsByClassName('syntaxbox notranslate'),
+  );
+
+  targets.forEach((current) => {
+    const code = current.innerHTML;
+
+    current.outerHTML = `
+    \`\`\`js
+      ${code}
+    \`\`\``.trim();
+  });
+
+  const result = dom.window.document.body.innerHTML;
+  return result;
+};
+
 export const convertListElement = (input: string): string => {
   const dom = new JSDOM(input);
   const targets = Array.from(dom.window.document.getElementsByTagName('ul'));
